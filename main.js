@@ -1,4 +1,4 @@
-setInterval(tick(), 1000);
+$( document ).ready(function() {setInterval(tick,1000)})
 
 function tick(){
     var now  = new Date();
