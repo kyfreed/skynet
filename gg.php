@@ -9,7 +9,10 @@ Sql::auth(
 );
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     Sql::query("UPDATE gatsby_colors "
-            .  "SET page_num = " . $_POST["page_num"])
+            .  "SET page_num = " . $_POST["page_num"]
+            .  ", passage = " . $_POST["passage"]
+            .  ", related_chars = " . $_POST["rel_chars"]
+            .  ", con_com = " . $_POST["con_com"]);
 }
 ?>
 <html>
