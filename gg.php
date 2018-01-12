@@ -1,19 +1,4 @@
 <?php
-include_once 'classes/Sql.php';
-Sql::auth(
-	 /* server   */ 'skynet.kylefreed.com',
-	 /* user     */ 'kyle_gg',
-	 /* password */ '11101110ee',
-	 /* db name  */ 'kyle_gg',
-	 /* port     */ 3306
-);
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    Sql::query("UPDATE gatsby_colors "
-            .  "SET page_num = " . $_POST["page_num"]
-            .  ", passage = " . $_POST["passage"]
-            .  ", related_chars = " . $_POST["rel_chars"]
-            .  ", con_com = " . $_POST["con_com"]);
-}
 ?>
 <html>
     <head>
@@ -21,7 +6,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <title></title>
     </head>
     <body>
-        <form action="gg.php" method="POST">
+        <form action="post.php" method="POST">
             Page number:&nbsp;
             <input type="text" name="page_num">
             <br>
@@ -33,6 +18,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <br>
             Connotations and comments:&nbsp;
             <input type="text" name="con_com">
+            <br>
+            <button type="submit">Submit</button>
         </form>
         <?php
         
