@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Core</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <pre>
+        import java.util.*;
+        public class Skynet {
+        public static void main(String[] args){//Primes the count with one of each element so that random chance still has an effect no matter what.
+        Scanner in = new Scanner(System.in);
+        String playerMove;
+        String opponentMove = "";
+        int total = 3;
+        int rocks = 1;
+        int scissorses = 1;
+        double rockWeight;
+        double paperWeight;
+        double wins = 0;
+        double losses = 0;
+        System.out.print("Enter move (rock/paper/scissors): ");
+        playerMove = in.nextLine(); // Accepts move from player
+        if(!(playerMove.equalsIgnoreCase("rock")
+                || playerMove.equalsIgnoreCase("paper")
+                || playerMove.equalsIgnoreCase("scissors"))){ //Input validation
+            System.err.println("Invalid move");
+            System.out.print("Enter move (rock/paper/scissors): ");
+            playerMove = in.nextLine();
+        }
+        while(!playerMove.equalsIgnoreCase("quit")){ //Keeps game loop going until player types 'quit'
+            if(!(playerMove.equalsIgnoreCase("rock")
+                    || playerMove.equalsIgnoreCase("paper")
+                    || playerMove.equalsIgnoreCase("scissors"))){
+                System.err.println("Invalid move");
+                System.out.print("Enter move (rock/paper/scissors): ");
+                playerMove = in.nextLine();
+                continue;
+            }
+            total++;
+            if(total < 6){ //Uses random chance for the first three moves
+                int r = (int) Math.floor(Math.random() * 3);
+                if(r == 0){
+                    opponentMove = "rock";
+                } else if (r == 1){
+                    opponentMove = "paper";
+                } else {
+                    opponentMove = "scissors";
+                }
+            } else { //If more than three plays have been submitted, use player's past plays to make a choice
+                rockWeight = scissorses / (double) total;
+                paperWeight = rocks / (double) total;
+                paperWeight += rockWeight;
+                double r = Math.random();
+                if(r < rockWeight){
+                    opponentMove = "rock";
+                } else if (r > rockWeight && r < paperWeight){
+                    opponentMove = "paper";
+                } else if (r > paperWeight){
+                    opponentMove = "scissors";
+                }
+            }
+            System.out.println("You played " + playerMove + " and your opponent played " + opponentMove + ".");
+            if(playerMove.equalsIgnoreCase(opponentMove)){
+                System.out.println("You tied.");
+                wins += 0.5;
+                losses += 0.5;
+            } else if (wins(playerMove, opponentMove)){
+                System.out.println("You won!");
+                wins++;
+            } else {
+                System.out.println("You lost.");
+                losses++;
+            }
+            switch(playerMove){ //Logs player's last move
+                case "rock":
+                    rocks++;
+                    break;
+                case "scissors":
+                    scissorses++;
+                    break;
+            }
+            System.out.print("Enter move (rock/paper/scissors): ");
+            playerMove = in.nextLine();
+        }
+        System.out.println("You won " + wins + " time" + (wins == 1 ? "" : "s") + " and lost " + losses + " time" + (losses == 1 ? "" : "s") + ".");
+    }
+    public static boolean wins(String x, String y){
+        return ((x.equalsIgnoreCase("rock") && y.equalsIgnoreCase("scissors"))
+                || (x.equalsIgnoreCase("scissors") && y.equalsIgnoreCase("paper"))
+                || (x.equalsIgnoreCase("paper") && y.equalsIgnoreCase("rock")));
+    }
+}
+        </pre>
+    </body>
+</html>
